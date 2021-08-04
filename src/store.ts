@@ -294,6 +294,13 @@ function createSetupStore<
       }
     : noop
 
+  function $dispose() {
+    scope.stop()
+    subscriptions = []
+    actionSubscriptions = []
+    pinia._s.delete($id)
+  }
+
   /**
    * Wraps an action to handle subscriptions.
    *
@@ -427,6 +434,7 @@ function createSetupStore<
     $onAction: addSubscription.bind(null, actionSubscriptions),
     $patch,
     $reset,
+    $dispose,
     $subscribe: addSubscription.bind(null, subscriptions),
   }
 
